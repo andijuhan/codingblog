@@ -10,7 +10,7 @@ const Layout = ({ children }: IProps) => {
       <>
          <Navbar />
          <div className='flex flex-col lg:flex-row min-h-screen max-w-5xl mx-auto pt-[120px]'>
-            <main>{children}</main>
+            <main className='w-full'>{children}</main>
          </div>
          <Footer />
       </>

@@ -3,6 +3,9 @@ import { GetServerSideProps } from 'next';
 import { IPosts } from '@/types/contents';
 import { GET_POST_QUERY } from '@/graphqL/query';
 import Card from '@/components/Card';
+import { useState } from 'react';
+import Search from '@/components/Search';
+import useSearchStore from '@/hooks/useSearchStore';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    res.setHeader(
@@ -23,11 +26,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    };
 };
 
-export default function Home({ posts }: any) {
-   console.log(posts);
+export default function Home({ posts: initialPost }: any) {
+   const [posts, setPost] = useState(initialPost);
+   const search = useSearchStore();
+   console.log(search.value);
 
    return (
-      <div className='grid grid-cols-3 gap-4 text-gray-800'>
+      <div className='max-w-4xl mx-auto grid grid-rows gap-4 text-gray-800'>
+         {search.show ? <Search /> : null}
+         <h2 className='text-2xl font-medium'>
+            {search.value.length === 0 ? 'Latest Post' : 'Search result'}
+         </h2>
          {posts.map((post: any, index: number) => (
             <Card key={index} posts={post} />
          ))}

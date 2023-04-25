@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async ({
    const { data } = await client.query<IPosts>({
       query: GET_POST_SINGLE_QUERY,
       variables: {
-         slug: params.postId,
+         slug: params?.postId,
       },
    });
 

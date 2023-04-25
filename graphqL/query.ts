@@ -2,12 +2,13 @@ import { gql } from '@apollo/client';
 
 export const GET_POST_QUERY = gql`
    query getPosts {
-      posts {
+      posts(sort: "updatedAt:desc") {
          data {
             attributes {
                Title
                slug
                Excerp
+               updatedAt
                CoverImage {
                   data {
                      attributes {
