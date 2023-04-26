@@ -65,7 +65,7 @@ const SingePost = ({ post }: any) => {
             <title>{content.Title}</title>
          </Head>
          {search.show ? (
-            <div className='mb-4 max-w-4xl mx-auto'>
+            <div className='max-w-4xl mx-auto'>
                <Search />
             </div>
          ) : null}

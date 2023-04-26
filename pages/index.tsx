@@ -36,10 +36,14 @@ export default function Home({ posts: initialPost }: any) {
          <Head>
             <title>Dizzycoding</title>
          </Head>
-         <div className='max-w-4xl mx-auto grid grid-rows gap-4 text-gray-800'>
-            {posts.map((post: any, index: number) => (
-               <Card key={index} posts={post} />
-            ))}
+
+         <div className='max-w-4xl mx-auto text-gray-800 mb-8'>
+            {search.show ? <Search /> : null}
+            <div className='grid grid-cols-3 gap-4'>
+               {posts.map((post: any, index: number) => (
+                  <Card key={index} posts={post} />
+               ))}
+            </div>
          </div>
       </>
    );

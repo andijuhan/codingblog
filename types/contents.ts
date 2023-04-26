@@ -14,6 +14,9 @@ export interface IPostAttributes {
                   thumbnail: {
                      url: string;
                   };
+                  medium: {
+                     url: string;
+                  };
                };
             };
          };
