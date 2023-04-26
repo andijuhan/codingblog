@@ -6,6 +6,7 @@ import Card from '@/components/Card';
 import { useState } from 'react';
 import Search from '@/components/Search';
 import useSearchStore from '@/hooks/useSearchStore';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    res.setHeader(
@@ -29,18 +30,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 export default function Home({ posts: initialPost }: any) {
    const [posts, setPost] = useState(initialPost);
    const search = useSearchStore();
-   console.log(search.value);
 
    return (
-      <div className='max-w-4xl mx-auto grid grid-rows gap-4 text-gray-800'>
-         {search.show ? <Search /> : null}
-         <h2 className='text-2xl font-medium'>
-            {search.value.length === 0 ? 'Latest Post' : 'Search result'}
-         </h2>
-         {posts.map((post: any, index: number) => (
-            <Card key={index} posts={post} />
-         ))}
-      </div>
+      <>
+         <Head>
+            <title>Dizzycoding</title>
+         </Head>
+         <div className='max-w-4xl mx-auto grid grid-rows gap-4 text-gray-800'>
+            {posts.map((post: any, index: number) => (
+               <Card key={index} posts={post} />
+            ))}
+         </div>
+      </>
    );
 }
 

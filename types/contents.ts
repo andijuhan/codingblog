@@ -23,3 +23,37 @@ export interface IPostAttributes {
       slug: string;
    };
 }
+
+export interface IPostSingleAttributes {
+   attributes: {
+      CoverImage: {
+         data: {
+            attributes: {
+               alternativeText: string;
+               formats: {
+                  thumbnail: {
+                     url: string;
+                  };
+                  medium: {
+                     url: string;
+                  };
+               };
+            };
+         };
+      };
+      Excerp: string;
+      Title: string;
+      slug: string;
+      Content: string;
+      Categories: {
+         data: ICategoriesAttributes[];
+      };
+   };
+}
+
+export interface ICategoriesAttributes {
+   attributes: {
+      Name: string;
+      Slug: string;
+   };
+}

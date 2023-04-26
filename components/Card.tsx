@@ -12,13 +12,13 @@ const Card = ({ posts }: ICard) => {
    const backendUrl = process.env.NEXT_BACKEND_URL || 'http://127.0.0.1:1337';
 
    return (
-      <div className='flex flex-row w-full items-center shadow-lg bg-slate-100 group rounded-lg'>
+      <div className='flex flex-row w-full items-center shadow-lg bg-slate-100 group rounded-lg overflow-hidden'>
          <div
-            className='w-[400px] overflow-hidden rounded-bl-lg rounded-tl-lg cursor-pointer'
+            className='w-[400px] overflow-hidden cursor-pointer'
             onClick={() => router.push(posts.attributes.slug)}
          >
             <img
-               className='w-[400px] object-cover scale-100 group-hover:scale-125 transition duration-500 rounded-bl-lg rounded-tl-lg'
+               className='w-[400px] object-cover scale-100 group-hover:scale-125 transition duration-500'
                src={
                   backendUrl +
                   posts.attributes.CoverImage.data.attributes.formats.thumbnail
@@ -30,9 +30,9 @@ const Card = ({ posts }: ICard) => {
 
          <div className='px-6 w-full'>
             <Link href={posts.attributes.slug}>
-               <h3 className='font-medium text-xl capitalize line-clamp-2'>
+               <h2 className='font-medium text-xl text-gray-600 capitalize line-clamp-2'>
                   {posts.attributes.Title}
-               </h3>
+               </h2>
             </Link>
             <p className='line-clamp-2 text-lg mt-4 opacity-80'>
                {posts.attributes.Excerp}

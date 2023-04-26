@@ -31,11 +31,20 @@ export const GET_POST_SINGLE_QUERY = gql`
                Title
                slug
                Excerp
+               Content
                CoverImage {
                   data {
                      attributes {
                         alternativeText
                         formats
+                     }
+                  }
+               }
+               Categories {
+                  data {
+                     attributes {
+                        Name
+                        Slug
                      }
                   }
                }
