@@ -11,7 +11,7 @@ const Search = () => {
    return (
       <div>
          <input
-            className='w-full rounded-lg px-6 py-4 mb-4 bg-slate-50 focus:outline-2 focus:outline-teal-200'
+            className='w-full px-6 py-4 mb-4 text-lg bg-slate-500 focus:outline-none'
             type='search'
             placeholder='Search post...'
             onChange={(e) => searchandler(e)}

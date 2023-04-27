@@ -1,8 +1,17 @@
 import { gql } from '@apollo/client';
 
 export const GET_POST_QUERY = gql`
-   query getPosts {
-      posts(sort: "updatedAt:desc") {
+   query getPosts($page: Int!, $pageSize: Int!) {
+      posts(
+         sort: "updatedAt:desc"
+         pagination: { page: $page, pageSize: $pageSize }
+      ) {
+         meta {
+            pagination {
+               total
+               pageCount
+            }
+         }
          data {
             attributes {
                Title

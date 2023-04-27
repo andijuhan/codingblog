@@ -1,5 +1,11 @@
 export interface IPosts {
    posts: {
+      meta: {
+         pagination: {
+            total: number;
+            pageCount: number;
+         };
+      };
       data: IPostAttributes[];
    };
 }
@@ -15,6 +21,9 @@ export interface IPostAttributes {
                      url: string;
                   };
                   medium: {
+                     url: string;
+                  };
+                  small: {
                      url: string;
                   };
                };

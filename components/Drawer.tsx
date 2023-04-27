@@ -5,11 +5,11 @@ import { BsLinkedin, BsGithub, BsTiktok } from 'react-icons/bs';
 
 const Drawer = () => {
    return (
-      <div className='w-[300px] bg-slate-900 h-screen fixed inset-0 z-40 shadow-xl shadow-slate-800 text-gray-200'>
-         <div className='flex gap-4 items-center mb-8 py-3 bg-slate-950 px-8'>
+      <div className='w-[300px] bg-slate-800 h-screen fixed inset-0 z-40 shadow-xl text-gray-200'>
+         <div className='flex gap-4 items-center py-4 px-8'>
             <Link href='/'>
                <img
-                  className='w-12 h-12 object-cover rounded-full cursor-pointer'
+                  className='w-12 h-12 object-cover rounded-full cursor-pointer ring-4 ring-yellow-400'
                   src='/images/profile.jpg'
                   alt=''
                />
@@ -18,6 +18,7 @@ const Drawer = () => {
                <h1 className='text-xl font-medium'>Andi Juhandi</h1>
             </div>
          </div>
+         <hr className='h-px bg-slate-700 border-0 w-full mb-8' />
          <div className='px-8'>
             <div className='text-xl font-medium'>Pages</div>
             <div className='flex flex-col gap-6 mb-10 mt-6 ml-4 text-lg text-gray-300'>
