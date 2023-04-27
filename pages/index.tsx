@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { IPosts } from '@/types/contents';
 import { GET_POST_QUERY } from '@/graphqL/query';
 import Card from '@/components/Card';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Search from '@/components/Search';
 import useSearchStore from '@/hooks/useSearchStore';
 import Head from 'next/head';
@@ -46,7 +46,7 @@ export default function Home({ posts: initialPost }: any) {
 
    const nextPosts = async () => {
       scrollToTop();
-      if (page < totalPage) {
+      if (page > 0 && page < totalPage) {
          setPage(page + 1);
          const { data } = await client.query({
             query: GET_POST_QUERY,
@@ -62,7 +62,7 @@ export default function Home({ posts: initialPost }: any) {
    };
    const prevPosts = async () => {
       scrollToTop();
-      if (page > 1) {
+      if (page > 1 && page <= totalPage) {
          setPage(page - 1);
          const { data } = await client.query({
             query: GET_POST_QUERY,
@@ -72,13 +72,24 @@ export default function Home({ posts: initialPost }: any) {
             },
          });
          const res = data.posts.data;
-         console.log(page);
          setPost(res);
       }
    };
-   const jumpPage = (page: number) => {
-      if (page > 1 && page > 1) {
-         setPage(page);
+   const jumpPage = async (e: ChangeEvent<HTMLInputElement>) => {
+      const val = Number(e.target.value);
+      if (val >= 0 && val <= totalPage) {
+         setPage(val);
+         const { data } = await client.query({
+            query: GET_POST_QUERY,
+            variables: {
+               page: val,
+               pageSize,
+            },
+         });
+         const res = data.posts.data;
+         console.log(page);
+         setPost(res);
+         scrollToTop();
       }
    };
 
@@ -108,7 +119,7 @@ export default function Home({ posts: initialPost }: any) {
                      className='w-10 text-gray-300 p-2 text-center font-semibold text-lg bg-gray-600 focus:outline-none'
                      value={page}
                      type='text'
-                     onChange={(e) => jumpPage(Number(e.target.value))}
+                     onChange={(e) => jumpPage(e)}
                   />
                   of
                   <input

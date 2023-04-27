@@ -69,13 +69,13 @@ const SingePost = ({ post }: any) => {
          ) : null}
          <div className='text-gray-300 max-w-4xl mx-auto bg-slate-800 mb-4'>
             <div className='p-6'>
-               <h1 className='text-3xl font-semibold capitalize mb-6'>
+               <h1 className='text-3xl font-semibold capitalize mb-8'>
                   {content.Title}
                </h1>
                <div className='mb-2 text-gray-300 flex gap-2'>
                   {content.Categories.data.map((category, index) => (
                      <Link
-                        className='lowercase'
+                        className='lowercase underline'
                         key={index}
                         href={'/category/' + category.attributes.Slug}
                      >
