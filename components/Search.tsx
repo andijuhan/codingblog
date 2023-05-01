@@ -14,33 +14,38 @@ const Search = () => {
 
    useEffect(() => {
       const fetchData = async () => {
-         const { data, loading } = await client.query<IPosts>({
+         const { data } = await client.query<IPosts>({
             query: SEARCH_POST_QUERY,
             variables: {
                contains: searchInput,
             },
          });
 
+         console.log(data);
+
          if (searchInput.length > 2) {
             search.setValue(data);
-            search.setLoading(loading);
          }
          if (searchInput.length < 3) {
             search.setValue({});
          }
       };
 
-      fetchData();
-   }, [searchInput, setSearchInput]);
+      if (searchInput.length > 0) {
+         fetchData();
+      }
+   }, [searchInput]);
 
    return (
-      <div>
-         <input
-            className='w-full px-6 py-4 mb-4 text-lg bg-slate-500 focus:outline-none'
-            type='search'
-            placeholder='Search post...'
-            onChange={(e) => searchandler(e)}
-         />
+      <div className='flex flex-col gap-2'>
+         <div>
+            <input
+               className='w-full px-6 py-3 mb-4 text-lg bg-slate-500 focus:outline-none rounded-lg'
+               type='search'
+               placeholder='Search post...'
+               onChange={(e) => searchandler(e)}
+            />
+         </div>
       </div>
    );
 };
