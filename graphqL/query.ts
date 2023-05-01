@@ -1,5 +1,32 @@
 import { gql } from '@apollo/client';
 
+export const SEARCH_POST_QUERY = gql`
+   query searchPost($contains: String!) {
+      posts(
+         sort: "updatedAt:desc"
+         pagination: { page: 1, pageSize: 9 }
+         filters: { Title: { contains: $contains } }
+      ) {
+         data {
+            attributes {
+               Title
+               slug
+               Excerp
+               updatedAt
+               CoverImage {
+                  data {
+                     attributes {
+                        alternativeText
+                        formats
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+`;
+
 export const GET_POST_QUERY = gql`
    query getPosts($page: Int!, $pageSize: Int!) {
       posts(
