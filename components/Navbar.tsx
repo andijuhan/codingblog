@@ -5,7 +5,6 @@ import useSearchStore from '@/hooks/useSearchStore';
 import Link from 'next/link';
 import { BsSearch } from 'react-icons/bs';
 import { FaChevronLeft } from 'react-icons/fa';
-import { BiCodeCurly } from 'react-icons/bi';
 
 const Navbar = () => {
    const search = useSearchStore();
@@ -24,8 +23,7 @@ const Navbar = () => {
                      onClick={drawer.toggle}
                   />
                   <Link href='/' className='flex gap-3'>
-                     <BiCodeCurly size={30} />
-                     <h1 className='text-2xl'>dizzycoding</h1>
+                     <h1 className='text-2xl'>DizzyCoding</h1>
                   </Link>
                </div>
                <div className='flex gap-4 items-center'>

@@ -4,7 +4,7 @@ export const SEARCH_POST_QUERY = gql`
    query searchPost($contains: String!) {
       posts(
          sort: "updatedAt:desc"
-         pagination: { page: 1, pageSize: 9 }
+         pagination: { page: 1, pageSize: 6 }
          filters: { Title: { contains: $contains } }
       ) {
          data {

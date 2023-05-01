@@ -106,7 +106,9 @@ export default function Home({ posts: initialPost }: any) {
       }
    }, [search.value]);
 
-   //console.log(search.value);
+   useEffect(() => {
+      setPost(initialPost.data);
+   }, []);
 
    return (
       <>
@@ -116,7 +118,7 @@ export default function Home({ posts: initialPost }: any) {
 
          <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8'>
             {search.show ? <Search /> : null}
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid grid-cols-3 gap-6 mt-6'>
                {posts?.map((post: any, index: number) => (
                   <Card key={index} posts={post} />
                ))}

@@ -21,8 +21,6 @@ const Search = () => {
             },
          });
 
-         console.log(data);
-
          if (searchInput.length > 2) {
             search.setValue(data);
          }

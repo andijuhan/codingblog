@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { IPosts } from '../types/contents';
 
 export interface ISearchStore {
    show: boolean;
