@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
    const posts = data.posts;
 
-   if (!data.posts.data) {
+   if (!data.posts.data.length) {
       return {
          notFound: true,
       };
