@@ -1,29 +1,40 @@
-import client from '@/graphqL/apollo';
-import { GetServerSideProps } from 'next';
-import { IPosts } from '@/types/contents';
-import { GET_POSTS_QUERY } from '@/graphqL/query';
 import Card from '@/components/Card';
-import { ChangeEvent, useEffect, useState } from 'react';
-import Search from '@/components/Search';
-import useSearchStore from '@/hooks/useSearchStore';
-import Head from 'next/head';
 import Pagination from '@/components/Pagination';
+import Search from '@/components/Search';
+import client from '@/graphqL/apollo';
+import { GET_POSTS_BY_CATEGORY_QUERY } from '@/graphqL/query';
+import useSearchStore from '@/hooks/useSearchStore';
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+   req,
+   res,
+   params,
+}) => {
    res.setHeader(
       'Cache-Control',
       'public, s-maxage=10, stale-while-revalidate=59'
    );
 
-   const { data } = await client.query<IPosts>({
-      query: GET_POSTS_QUERY,
+   const { data } = await client.query({
+      query: GET_POSTS_BY_CATEGORY_QUERY,
       variables: {
+         slug: params?.categorySlug,
          page: 1,
          pageSize: 6,
       },
    });
 
    const posts = data.posts;
+
+   if (!data.posts.data) {
+      return {
+         notFound: true,
+      };
+   }
 
    return {
       props: {
@@ -32,13 +43,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    };
 };
 
-export default function Home({ posts: initialPost }: any) {
+const Category = ({ posts: initialPost }: any) => {
    const search = useSearchStore();
    const [posts, setPost] = useState(initialPost.data);
    const [page, setPage] = useState(1);
    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
    const totalPage = initialPost.meta.pagination.pageCount;
    const pageSize = 6;
+   const router = useRouter();
 
    const scrollToTop = () => {
       if (!isBrowser()) return;
@@ -50,14 +62,15 @@ export default function Home({ posts: initialPost }: any) {
       if (page > 0 && page < totalPage) {
          setPage(page + 1);
          const { data } = await client.query({
-            query: GET_POSTS_QUERY,
+            query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
+               slug: router.query.categorySlug,
                page: page + 1,
                pageSize,
             },
          });
          const res = data.posts.data;
-         console.log(page);
+
          setPost(res);
       }
    };
@@ -66,8 +79,9 @@ export default function Home({ posts: initialPost }: any) {
       if (page > 1 && page <= totalPage) {
          setPage(page - 1);
          const { data } = await client.query({
-            query: GET_POSTS_QUERY,
+            query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
+               slug: router.query.categorySlug,
                page: page - 1,
                pageSize,
             },
@@ -81,14 +95,15 @@ export default function Home({ posts: initialPost }: any) {
       if (val >= 0 && val <= totalPage) {
          setPage(val);
          const { data } = await client.query({
-            query: GET_POSTS_QUERY,
+            query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
+               slug: router.query.categorySlug,
                page: val,
                pageSize,
             },
          });
          const res = data.posts.data;
-         console.log(page);
+
          setPost(res);
          scrollToTop();
       }
@@ -135,8 +150,6 @@ export default function Home({ posts: initialPost }: any) {
          </div>
       </>
    );
-}
-
-export const config = {
-   runtime: 'nodejs',
 };
+
+export default Category;

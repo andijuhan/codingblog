@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async ({
    const { data } = await client.query<IPosts>({
       query: GET_POST_SINGLE_QUERY,
       variables: {
-         slug: params?.postId,
+         slug: params?.postSlug,
       },
    });
 
@@ -114,7 +114,7 @@ const SingePost = ({ post }: any) => {
             <div className='max-w-4xl mx-auto grid grid-cols-3 gap-6'>
                {posts.length > 0 &&
                   posts.map((post: any, index: number) => (
-                     <Card key={index} posts={post} />
+                     <Card key={index} post={post} />
                   ))}
             </div>
          ) : null}

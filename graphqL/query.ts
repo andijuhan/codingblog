@@ -27,7 +27,7 @@ export const SEARCH_POST_QUERY = gql`
    }
 `;
 
-export const GET_POST_QUERY = gql`
+export const GET_POSTS_QUERY = gql`
    query getPosts($page: Int!, $pageSize: Int!) {
       posts(
          sort: "updatedAt:desc"
@@ -81,6 +81,39 @@ export const GET_POST_SINGLE_QUERY = gql`
                      attributes {
                         Name
                         Slug
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+`;
+
+export const GET_POSTS_BY_CATEGORY_QUERY = gql`
+   query getPostByCategory($slug: String!, $page: Int!, $pageSize: Int!) {
+      posts(
+         sort: "updatedAt:desc"
+         pagination: { page: $page, pageSize: $pageSize }
+         filters: { Categories: { Slug: { eq: $slug } } }
+      ) {
+         meta {
+            pagination {
+               page
+               pageCount
+            }
+         }
+         data {
+            attributes {
+               Title
+               slug
+               Excerp
+               updatedAt
+               CoverImage {
+                  data {
+                     attributes {
+                        alternativeText
+                        formats
                      }
                   }
                }
