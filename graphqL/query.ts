@@ -122,3 +122,30 @@ export const GET_POSTS_BY_CATEGORY_QUERY = gql`
       }
    }
 `;
+
+export const GET_SITE_SETTING = gql`
+   query getSiteSetting {
+      setting {
+         data {
+            attributes {
+               SiteTitle
+               SiteDescription
+               FrontEndUrl
+            }
+         }
+      }
+   }
+`;
+
+export const GET_POST_SLUGS = gql`
+   query getPostSlugs {
+      posts(sort: "updatedAt:desc") {
+         data {
+            attributes {
+               slug
+               updatedAt
+            }
+         }
+      }
+   }
+`;

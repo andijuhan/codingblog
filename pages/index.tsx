@@ -1,7 +1,7 @@
 import client from '@/graphqL/apollo';
 import { GetServerSideProps } from 'next';
 import { IPosts } from '@/types/contents';
-import { GET_POSTS_QUERY } from '@/graphqL/query';
+import { GET_POSTS_QUERY, GET_SITE_SETTING } from '@/graphqL/query';
 import Card from '@/components/Card';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Search from '@/components/Search';
@@ -14,6 +14,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       'Cache-Control',
       'public, s-maxage=10, stale-while-revalidate=59'
    );
+
+   const { data: settingData } = await client.query({
+      query: GET_SITE_SETTING,
+   });
+
+   const setting = settingData.setting.data.attributes;
 
    const { data } = await client.query<IPosts>({
       query: GET_POSTS_QUERY,
@@ -28,12 +34,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    return {
       props: {
          posts,
+         setting,
       },
    };
 };
 
-export default function Home({ posts: initialPost }: any) {
+export default function Home({ posts: initialPost, setting }: any) {
    const search = useSearchStore();
+   //const setting = useSiteSetting();
    const [posts, setPost] = useState(initialPost.data);
    const [page, setPage] = useState(1);
    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
@@ -110,10 +118,12 @@ export default function Home({ posts: initialPost }: any) {
       setPost(initialPost.data);
    }, []);
 
+   console.log(setting.SiteTitle);
+
    return (
       <>
          <Head>
-            <title>Dizzycoding</title>
+            <title>{setting.SiteTitle + ' - ' + setting.SiteDescription}</title>
          </Head>
 
          <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8'>

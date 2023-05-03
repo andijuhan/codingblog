@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-sync-scripts */
 /* eslint-disable @next/next/no-img-element */
 import client from '@/graphqL/apollo';
-import { GET_POST_SINGLE_QUERY } from '@/graphqL/query';
+import { GET_POST_SINGLE_QUERY, GET_SITE_SETTING } from '@/graphqL/query';
 import { IPostSingleAttributes, IPosts } from '@/types/contents';
 import { GetServerSideProps } from 'next';
 import Markdown from 'markdown-to-jsx';
@@ -23,6 +23,12 @@ export const getServerSideProps: GetServerSideProps = async ({
       'public, s-maxage=10, stale-while-revalidate=59'
    );
 
+   const { data: settingData } = await client.query({
+      query: GET_SITE_SETTING,
+   });
+
+   const setting = settingData.setting.data.attributes;
+
    const { data } = await client.query<IPosts>({
       query: GET_POST_SINGLE_QUERY,
       variables: {
@@ -41,11 +47,12 @@ export const getServerSideProps: GetServerSideProps = async ({
    return {
       props: {
          post,
+         setting,
       },
    };
 };
 
-const SingePost = ({ post }: any) => {
+const SingePost = ({ post, setting }: any) => {
    const [posts, setPost] = useState([]);
    const attributes: IPostSingleAttributes[] = post;
    const content = attributes[0].attributes;
@@ -77,7 +84,7 @@ const SingePost = ({ post }: any) => {
    return (
       <>
          <Head>
-            <title>{content.Title}</title>
+            <title>{content.Title + ' - ' + setting.SiteTitle}</title>
          </Head>
 
          {search.show ? (

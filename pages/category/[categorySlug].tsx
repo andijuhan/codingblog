@@ -128,7 +128,7 @@ const Category = ({ posts: initialPost }: any) => {
    return (
       <>
          <Head>
-            <title>Dizzycoding</title>
+            <title>Category - {router.query.categorySlug}</title>
          </Head>
 
          <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8'>

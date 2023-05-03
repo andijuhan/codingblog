@@ -9,6 +9,7 @@ interface IProps {
 
 const Layout = ({ children }: IProps) => {
    const drawer = useDrawerStore();
+
    return (
       <>
          <Navbar />
