@@ -6,7 +6,7 @@ export interface IDrawerStore {
 }
 
 const useDrawerStore = create<IDrawerStore>((set) => ({
-   show: false,
+   show: true,
    toggle: () => set((state) => ({ show: !state.show })),
 }));
 

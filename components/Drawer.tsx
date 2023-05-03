@@ -9,7 +9,7 @@ const Drawer = () => {
          <div className='flex gap-4 items-center py-4 px-8'>
             <Link href='/'>
                <img
-                  className='w-12 h-12 object-cover rounded-full cursor-pointer ring-4 ring-yellow-400'
+                  className='w-12 h-12 object-cover rounded-full cursor-pointer ring-4 ring-violet-500'
                   src='/images/profile.jpg'
                   alt=''
                />
