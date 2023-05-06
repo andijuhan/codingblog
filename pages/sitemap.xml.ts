@@ -17,6 +17,12 @@ const generateSiteMap = (frontEndUrl: string) => {
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
+    <url>
+        <loc>${`${frontEndUrl}/category-sitemap.xml`}</loc>
+        <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+    </url>
    </urlset>
  `;
 };

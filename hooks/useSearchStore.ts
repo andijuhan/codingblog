@@ -8,7 +8,7 @@ export interface ISearchStore {
 }
 
 const useSearchStore = create<ISearchStore>((set) => ({
-   show: true,
+   show: false,
    value: {},
    toggle: () => set((state) => ({ show: !state.show })),
    setValue: (search: any) => set({ value: search }),

@@ -149,3 +149,15 @@ export const GET_POST_SLUGS = gql`
       }
    }
 `;
+
+export const GET_CATEGORY_SLUG = gql`
+   query getCategorySlugs {
+      categories {
+         data {
+            attributes {
+               Slug
+            }
+         }
+      }
+   }
+`;

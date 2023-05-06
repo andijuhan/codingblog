@@ -87,13 +87,8 @@ const SingePost = ({ post, setting }: any) => {
             <title>{content.Title + ' - ' + setting.SiteTitle}</title>
          </Head>
 
-         {search.show ? (
-            <div className='max-w-4xl mx-auto'>
-               <Search />
-            </div>
-         ) : null}
          {posts.length === 0 ? (
-            <div className='text-gray-300 max-w-4xl mx-auto mb-4'>
+            <div className='text-gray-300 max-w-4xl mx-auto mb-4 px-5 lg:px-0'>
                <div className='py-6'>
                   <h1 className='text-3xl font-semibold capitalize mb-8'>
                      {content.Title}

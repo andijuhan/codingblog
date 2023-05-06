@@ -16,7 +16,7 @@ const Layout = ({ children }: IProps) => {
          <div className='flex flex-col lg:flex-row min-h-screen max-w-5xl mx-auto pt-[90px]'>
             <main className='w-full'>{children}</main>
          </div>
-         {drawer.show ? <Drawer /> : null}
+         <Drawer />
          <Footer />
       </>
    );

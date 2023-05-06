@@ -7,7 +7,6 @@ import useSearchStore from '@/hooks/useSearchStore';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async ({
    req,
@@ -19,10 +18,12 @@ export const getServerSideProps: GetServerSideProps = async ({
       'public, s-maxage=10, stale-while-revalidate=59'
    );
 
+   const slug = params?.categorySlug;
+
    const { data } = await client.query({
       query: GET_POSTS_BY_CATEGORY_QUERY,
       variables: {
-         slug: params?.categorySlug,
+         slug: slug,
          page: 1,
          pageSize: 6,
       },
@@ -39,18 +40,18 @@ export const getServerSideProps: GetServerSideProps = async ({
    return {
       props: {
          posts,
+         slug,
       },
    };
 };
 
-const Category = ({ posts: initialPost }: any) => {
+const Category = ({ posts: initialPost, slug }: any) => {
    const search = useSearchStore();
    const [posts, setPost] = useState(initialPost.data);
    const [page, setPage] = useState(1);
    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
    const totalPage = initialPost.meta.pagination.pageCount;
    const pageSize = 6;
-   const router = useRouter();
 
    const scrollToTop = () => {
       if (!isBrowser()) return;
@@ -64,7 +65,7 @@ const Category = ({ posts: initialPost }: any) => {
          const { data } = await client.query({
             query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
-               slug: router.query.categorySlug,
+               slug: slug,
                page: page + 1,
                pageSize,
             },
@@ -81,7 +82,7 @@ const Category = ({ posts: initialPost }: any) => {
          const { data } = await client.query({
             query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
-               slug: router.query.categorySlug,
+               slug: slug,
                page: page - 1,
                pageSize,
             },
@@ -97,7 +98,7 @@ const Category = ({ posts: initialPost }: any) => {
          const { data } = await client.query({
             query: GET_POSTS_BY_CATEGORY_QUERY,
             variables: {
-               slug: router.query.categorySlug,
+               slug: slug,
                page: val,
                pageSize,
             },
@@ -128,12 +129,11 @@ const Category = ({ posts: initialPost }: any) => {
    return (
       <>
          <Head>
-            <title>Category - {router.query.categorySlug}</title>
+            <title>{`Category - ${slug}`}</title>
          </Head>
 
-         <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8'>
-            {search.show ? <Search /> : null}
-            <div className='grid grid-cols-3 gap-6 mt-6'>
+         <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8 px-5 lg:px-0'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
                {posts?.map((post: any, index: number) => (
                   <Card key={index} post={post} />
                ))}
