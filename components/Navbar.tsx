@@ -15,7 +15,7 @@ const Navbar = () => {
    return (
       <header className='w-full'>
          <nav className='fixed min-h-[80px] py-2 px-4 w-full text-lg font-medium bg-violet-700 text-gray-100 shadow-md z-30 flex justify-center items-center'>
-            <div className='flex justify-between gap-10 items-center w-full lg:w-[1024px]'>
+            <div className='flex justify-between gap-5 items-center w-full lg:w-[1024px]'>
                <div className='flex gap-4 justify-start items-center'>
                   <FaChevronLeft
                      size={20}

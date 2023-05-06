@@ -113,7 +113,7 @@ const SingePost = ({ post, setting }: any) => {
          ) : null}
 
          {posts.length > 0 ? (
-            <div className='max-w-4xl mx-auto grid grid-cols-3 gap-6'>
+            <div className='max-w-4xl mx-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5 lg:px-0 mt-2'>
                {posts.length > 0 &&
                   posts.map((post: any, index: number) => (
                      <Card key={index} post={post} />
