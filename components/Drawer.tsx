@@ -4,12 +4,29 @@ import React, { useEffect, useState } from 'react';
 import { BsLinkedin, BsGithub, BsTiktok } from 'react-icons/bs';
 import { motion, AnimatePresence } from 'framer-motion';
 import useDrawerStore from '@/hooks/useDrawerStore';
+import { useDetectClickOutside } from 'react-detect-click-outside';
+import client from '@/graphqL/apollo';
+import { GET_CATEGORY_QUERY } from '@/graphqL/query';
 
 const Drawer = () => {
    const drawer = useDrawerStore();
    const [show, setShow] = useState<boolean>(false);
+   const [categoryMenu, setCategoryMenu] = useState([]);
+
+   const drawerRef = useDetectClickOutside({
+      onTriggered: () => drawer.toggle(),
+   });
 
    useEffect(() => {
+      const fetchCategory = async () => {
+         const { data } = await client.query({
+            query: GET_CATEGORY_QUERY,
+         });
+
+         const categories = data.categories.data;
+         setCategoryMenu(categories);
+      };
+      fetchCategory();
       setShow(drawer.show);
    }, [drawer.show]);
 
@@ -22,6 +39,7 @@ const Drawer = () => {
                exit={{ x: '-100vw' }}
                transition={{ type: 'spring', duration: 0.7, bounce: 0.2 }}
                className='w-[310px] bg-slate-800 h-screen fixed inset-0 z-40 shadow-xl text-gray-200 pl-10'
+               ref={drawerRef}
             >
                <div className='flex gap-4 items-center py-4 px-8'>
                   <Link href='/'>
@@ -39,37 +57,30 @@ const Drawer = () => {
                <div className='px-8'>
                   <div className='text-xl font-medium'>Pages</div>
                   <div className='flex flex-col gap-6 mb-10 mt-6 ml-4 text-lg text-gray-300'>
-                     <Link href='/'>Home</Link>
-                     <Link href='/'>Projects</Link>
-                     <Link href='/'>About</Link>
-                     <Link href='/'>Contact</Link>
+                     <Link className='hover:text-violet-400' href='/'>
+                        Home
+                     </Link>
+                     <Link className='hover:text-violet-400' href='/'>
+                        Projects
+                     </Link>
+                     <Link className='hover:text-violet-400' href='/'>
+                        About
+                     </Link>
+                     <Link className='hover:text-violet-400' href='/'>
+                        Contact
+                     </Link>
                   </div>
                   <div className='text-xl font-medium'>Categories</div>
                   <div className='flex flex-wrap gap-3 mt-6 ml-4 mb-10'>
-                     <Link
-                        className='bg-slate-700 rounded-lg py-1 px-2'
-                        href='/'
-                     >
-                        Nextjs
-                     </Link>
-                     <Link
-                        className='bg-slate-700 rounded-lg py-1 px-2'
-                        href='/'
-                     >
-                        Strapi
-                     </Link>
-                     <Link
-                        className='bg-slate-700 rounded-lg py-1 px-2'
-                        href='/'
-                     >
-                        Graphql
-                     </Link>
-                     <Link
-                        className='bg-slate-700 rounded-lg py-1 px-2'
-                        href='/'
-                     >
-                        Prisma
-                     </Link>
+                     {categoryMenu.map((category: any, index) => (
+                        <Link
+                           key={index}
+                           className='bg-slate-700 rounded-lg py-1 px-2 hover:bg-violet-500'
+                           href={`/category/${category.attributes.Slug}`}
+                        >
+                           {category.attributes.Name}
+                        </Link>
+                     ))}
                   </div>
                   <div className='text-xl font-medium'>Social</div>
                   <div className='flex items-center gap-4 mt-6 ml-4'>

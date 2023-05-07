@@ -123,7 +123,7 @@ export const GET_POSTS_BY_CATEGORY_QUERY = gql`
    }
 `;
 
-export const GET_SITE_SETTING = gql`
+export const GET_SITE_SETTING_QUERY = gql`
    query getSiteSetting {
       setting {
          data {
@@ -137,7 +137,7 @@ export const GET_SITE_SETTING = gql`
    }
 `;
 
-export const GET_POST_SLUGS = gql`
+export const GET_POST_SLUGS_QUERY = gql`
    query getPostSlugs {
       posts(sort: "updatedAt:desc") {
          data {
@@ -150,11 +150,12 @@ export const GET_POST_SLUGS = gql`
    }
 `;
 
-export const GET_CATEGORY_SLUG = gql`
+export const GET_CATEGORY_QUERY = gql`
    query getCategorySlugs {
       categories {
          data {
             attributes {
+               Name
                Slug
             }
          }

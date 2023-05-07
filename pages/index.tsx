@@ -1,10 +1,8 @@
 import client from '@/graphqL/apollo';
 import { GetServerSideProps } from 'next';
-import { IPosts } from '@/types/contents';
-import { GET_POSTS_QUERY, GET_SITE_SETTING } from '@/graphqL/query';
+import { GET_POSTS_QUERY, GET_SITE_SETTING_QUERY } from '@/graphqL/query';
 import Card from '@/components/Card';
 import { ChangeEvent, useEffect, useState } from 'react';
-import Search from '@/components/Search';
 import useSearchStore from '@/hooks/useSearchStore';
 import Head from 'next/head';
 import Pagination from '@/components/Pagination';
@@ -16,12 +14,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
    );
 
    const { data: settingData } = await client.query({
-      query: GET_SITE_SETTING,
+      query: GET_SITE_SETTING_QUERY,
    });
 
    const setting = settingData.setting.data.attributes;
 
-   const { data } = await client.query<IPosts>({
+   const { data } = await client.query({
       query: GET_POSTS_QUERY,
       variables: {
          page: 1,
@@ -117,8 +115,6 @@ export default function Home({ posts: initialPost, setting }: any) {
    useEffect(() => {
       setPost(initialPost.data);
    }, []);
-
-   console.log(setting.SiteTitle);
 
    return (
       <>

@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-sync-scripts */
 /* eslint-disable @next/next/no-img-element */
 import client from '@/graphqL/apollo';
-import { GET_POST_SINGLE_QUERY, GET_SITE_SETTING } from '@/graphqL/query';
-import { IPostSingleAttributes, IPosts } from '@/types/contents';
+import { GET_POST_SINGLE_QUERY, GET_SITE_SETTING_QUERY } from '@/graphqL/query';
 import { GetServerSideProps } from 'next';
 import Markdown from 'markdown-to-jsx';
 import useSearchStore from '@/hooks/useSearchStore';
-import Search from '@/components/Search';
 import Link from 'next/link';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
@@ -24,12 +22,12 @@ export const getServerSideProps: GetServerSideProps = async ({
    );
 
    const { data: settingData } = await client.query({
-      query: GET_SITE_SETTING,
+      query: GET_SITE_SETTING_QUERY,
    });
 
    const setting = settingData.setting.data.attributes;
 
-   const { data } = await client.query<IPosts>({
+   const { data } = await client.query({
       query: GET_POST_SINGLE_QUERY,
       variables: {
          slug: params?.postSlug,
@@ -54,8 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 const SingePost = ({ post, setting }: any) => {
    const [posts, setPost] = useState([]);
-   const attributes: IPostSingleAttributes[] = post;
-   const content = attributes[0].attributes;
+   const content = post[0].attributes;
    const search = useSearchStore();
    const router = useRouter();
 
@@ -94,15 +91,17 @@ const SingePost = ({ post, setting }: any) => {
                      {content.Title}
                   </h1>
                   <div className='mb-2 text-gray-300 flex gap-2'>
-                     {content.Categories.data.map((category, index) => (
-                        <Link
-                           className='lowercase text-gray-200'
-                           key={index}
-                           href={'/category/' + category.attributes.Slug}
-                        >
-                           {'#' + category.attributes.Name}
-                        </Link>
-                     ))}
+                     {content.Categories.data.map(
+                        (category: any, index: number) => (
+                           <Link
+                              className='lowercase text-gray-200'
+                              key={index}
+                              href={'/category/' + category.attributes.Slug}
+                           >
+                              {'#' + category.attributes.Name}
+                           </Link>
+                        )
+                     )}
                   </div>
 
                   <article className='prose-p:leading-loose prose-p:tracking-wide prose-p:text-lg prose-p:mb-3 prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-3 prose-h3:text-xl prose-h3:font-semibold prose-h3:mb-3 prose-pre:mb-3 prose-table:border-collapse prose-table:border prose-table:mb-3 prose-tr:border-collapse prose-th:p-3 prose-th:border-collapse prose-th:border prose-tr:border prose-td:border-collapse prose-td:border prose-td:p-3 prose-a:text-violet-400 prose-ul:mb-3 prose-ul:list-disc prose-li:list-inside prose-ol:list-decimal'>
@@ -113,7 +112,7 @@ const SingePost = ({ post, setting }: any) => {
          ) : null}
 
          {posts.length > 0 ? (
-            <div className='max-w-4xl mx-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5 lg:px-0 mt-2'>
+            <div className='max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5 lg:px-0 mt-2'>
                {posts.length > 0 &&
                   posts.map((post: any, index: number) => (
                      <Card key={index} post={post} />

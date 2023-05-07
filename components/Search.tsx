@@ -1,7 +1,6 @@
 import client from '@/graphqL/apollo';
 import { SEARCH_POST_QUERY } from '@/graphqL/query';
 import useSearchStore from '@/hooks/useSearchStore';
-import { IPosts } from '@/types/contents';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -9,9 +8,15 @@ const Search = () => {
    const [searchInput, setSearchInput] = useState<string>('');
    const search = useSearchStore();
    const [show, setShow] = useState<boolean>(false);
+   const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
 
    const searchandler = (e: ChangeEvent<HTMLInputElement>) => {
       setSearchInput(e.target.value);
+   };
+
+   const scrollToTop = () => {
+      if (!isBrowser()) return;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
    };
 
    useEffect(() => {
@@ -20,7 +25,7 @@ const Search = () => {
 
    useEffect(() => {
       const fetchData = async () => {
-         const { data } = await client.query<IPosts>({
+         const { data } = await client.query({
             query: SEARCH_POST_QUERY,
             variables: {
                contains: searchInput,

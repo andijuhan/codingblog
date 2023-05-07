@@ -1,6 +1,5 @@
 import Card from '@/components/Card';
 import Pagination from '@/components/Pagination';
-import Search from '@/components/Search';
 import client from '@/graphqL/apollo';
 import { GET_POSTS_BY_CATEGORY_QUERY } from '@/graphqL/query';
 import useSearchStore from '@/hooks/useSearchStore';
@@ -23,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async ({
    const { data } = await client.query({
       query: GET_POSTS_BY_CATEGORY_QUERY,
       variables: {
-         slug: slug,
+         slug,
          page: 1,
          pageSize: 6,
       },
@@ -124,7 +123,7 @@ const Category = ({ posts: initialPost, slug }: any) => {
 
    useEffect(() => {
       setPost(initialPost.data);
-   }, []);
+   }, [slug]);
 
    return (
       <>

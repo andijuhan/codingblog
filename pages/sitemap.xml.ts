@@ -1,5 +1,5 @@
 import client from '@/graphqL/apollo';
-import { GET_SITE_SETTING } from '@/graphqL/query';
+import { GET_SITE_SETTING_QUERY } from '@/graphqL/query';
 import { GetServerSideProps } from 'next';
 
 const generateSiteMap = (frontEndUrl: string) => {
@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
    );
 
    const { data } = await client.query({
-      query: GET_SITE_SETTING,
+      query: GET_SITE_SETTING_QUERY,
    });
 
    const frontEndUrl = data.setting.data.attributes.FrontEndUrl;
