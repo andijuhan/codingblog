@@ -16,7 +16,7 @@ const Navbar = () => {
       <header className='w-full'>
          <nav className='fixed min-h-[80px] py-2 px-4 w-full text-lg font-medium bg-violet-700 text-gray-100 shadow-md z-30 flex justify-center items-center'>
             <div className='flex justify-between gap-5 items-center w-full lg:w-[1024px]'>
-               <div className='flex gap-4 justify-start items-center'>
+               <div className='flex items-center justify-start gap-4'>
                   <FaChevronLeft
                      size={20}
                      className={`mr-4 cursor-pointer ${
@@ -37,10 +37,10 @@ const Navbar = () => {
                      </motion.div>
                   )}
                </div>
-               <div className='flex gap-4 items-center justify-end w-full'>
+               <div className='flex items-center justify-end w-full gap-4'>
                   <Search />
                   <BsSearch
-                     className='cursor-pointer hover:scale-105 mr-4 lg:mr-0'
+                     className='mr-4 cursor-pointer hover:scale-105 lg:mr-0'
                      size={25}
                      onClick={search.toggle}
                   />

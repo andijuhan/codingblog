@@ -41,10 +41,10 @@ const Drawer = () => {
                className='w-[310px] bg-slate-800 h-screen fixed inset-0 z-40 shadow-xl text-gray-200 pl-10'
                ref={drawerRef}
             >
-               <div className='flex gap-4 items-center py-4 px-8'>
+               <div className='flex items-center gap-4 px-8 py-4'>
                   <Link href='/'>
                      <img
-                        className='w-12 h-12 object-cover rounded-full cursor-pointer ring-4 ring-violet-500'
+                        className='object-cover w-12 h-12 rounded-full cursor-pointer ring-4 ring-violet-500'
                         src='/images/profile.jpg'
                         alt=''
                      />
@@ -53,10 +53,10 @@ const Drawer = () => {
                      <h1 className='text-xl font-medium'>Juhandi</h1>
                   </div>
                </div>
-               <hr className='h-px bg-slate-700 border-0 w-full mb-8' />
+               <hr className='w-full h-px mb-8 border-0 bg-slate-700' />
                <div className='px-8'>
                   <div className='text-xl font-medium'>Pages</div>
-                  <div className='flex flex-col gap-6 mb-10 mt-6 ml-4 text-lg text-gray-300'>
+                  <div className='flex flex-col gap-6 mt-6 mb-10 ml-4 text-lg text-gray-300'>
                      <Link className='hover:text-violet-400' href='/'>
                         Home
                      </Link>
@@ -71,11 +71,11 @@ const Drawer = () => {
                      </Link>
                   </div>
                   <div className='text-xl font-medium'>Categories</div>
-                  <div className='flex flex-wrap gap-3 mt-6 ml-4 mb-10'>
+                  <div className='flex flex-wrap gap-3 mt-6 mb-10 ml-4'>
                      {categoryMenu.map((category: any, index) => (
                         <Link
                            key={index}
-                           className='bg-slate-700 rounded-lg py-1 px-2 hover:bg-violet-500'
+                           className='px-2 py-1 rounded-lg bg-slate-700 hover:bg-violet-500'
                            href={`/category/${category.attributes.Slug}`}
                         >
                            {category.attributes.Name}

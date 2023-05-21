@@ -85,16 +85,16 @@ const SingePost = ({ post, setting }: any) => {
          </Head>
 
          {posts.length === 0 ? (
-            <div className='text-gray-300 max-w-4xl mx-auto mb-4 px-5 lg:px-0'>
+            <div className='max-w-4xl px-5 mx-auto mb-4 text-gray-300 lg:px-0'>
                <div className='py-6'>
-                  <h1 className='text-3xl font-semibold capitalize mb-8'>
+                  <h1 className='mb-8 text-3xl font-semibold capitalize'>
                      {content.Title}
                   </h1>
-                  <div className='mb-2 text-gray-300 flex gap-2'>
+                  <div className='flex gap-2 mb-2 text-gray-300'>
                      {content.Categories.data.map(
                         (category: any, index: number) => (
                            <Link
-                              className='lowercase text-gray-200'
+                              className='text-gray-200 lowercase'
                               key={index}
                               href={'/category/' + category.attributes.Slug}
                            >
@@ -112,7 +112,7 @@ const SingePost = ({ post, setting }: any) => {
          ) : null}
 
          {posts.length > 0 ? (
-            <div className='max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5 lg:px-0 mt-2'>
+            <div className='grid max-w-4xl grid-cols-1 gap-6 px-5 mx-auto mt-2 sm:grid-cols-2 lg:grid-cols-3 lg:px-0'>
                {posts.length > 0 &&
                   posts.map((post: any, index: number) => (
                      <Card key={index} post={post} />

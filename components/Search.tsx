@@ -3,20 +3,17 @@ import { SEARCH_POST_QUERY } from '@/graphqL/query';
 import useSearchStore from '@/hooks/useSearchStore';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import useDebounce from '@/hooks/useDebounce';
 
 const Search = () => {
-   const [searchInput, setSearchInput] = useState<string>('');
+   const [searchTerm, setSearchTerm] = useState('');
+   const debounceSearchTerm = useDebounce(searchTerm, 1000);
+
    const search = useSearchStore();
    const [show, setShow] = useState<boolean>(false);
-   const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
 
    const searchandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchInput(e.target.value);
-   };
-
-   const scrollToTop = () => {
-      if (!isBrowser()) return;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setSearchTerm(e.target.value);
    };
 
    useEffect(() => {
@@ -28,22 +25,20 @@ const Search = () => {
          const { data } = await client.query({
             query: SEARCH_POST_QUERY,
             variables: {
-               contains: searchInput,
+               contains: debounceSearchTerm,
             },
          });
 
-         if (searchInput.length > 2) {
+         if (debounceSearchTerm.length > 2) {
             search.setValue(data);
          }
-         if (searchInput.length < 3) {
+         if (debounceSearchTerm.length === 0) {
             search.setValue({});
          }
       };
 
-      if (searchInput.length > 0) {
-         fetchData();
-      }
-   }, [searchInput]);
+      fetchData();
+   }, [debounceSearchTerm]);
 
    return (
       <AnimatePresence mode='wait'>
@@ -53,11 +48,11 @@ const Search = () => {
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
                transition={{ type: 'spring', duration: 0.7 }}
-               className='flex flex-col gap-2 w-full'
+               className='flex flex-col w-full gap-2'
             >
                <div>
                   <input
-                     className='w-full px-6 py-3 text-lg bg-violet-500 text-gray-200 placeholder-gray-200 focus:outline-none rounded-lg'
+                     className='w-full px-6 py-3 text-lg text-gray-200 placeholder-gray-200 rounded-lg bg-violet-500 focus:outline-none'
                      type='search'
                      placeholder='Search post...'
                      onChange={(e) => searchandler(e)}

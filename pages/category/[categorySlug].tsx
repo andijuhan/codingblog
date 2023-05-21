@@ -131,8 +131,8 @@ const Category = ({ posts: initialPost, slug }: any) => {
             <title>{`Category - ${slug}`}</title>
          </Head>
 
-         <div className='max-w-4xl flex flex-col mx-auto text-gray-200 mb-8 px-5 lg:px-0'>
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6'>
+         <div className='flex flex-col max-w-4xl px-5 mx-auto mb-8 text-gray-200 lg:px-0'>
+            <div className='grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3'>
                {posts?.map((post: any, index: number) => (
                   <Card key={index} post={post} />
                ))}
