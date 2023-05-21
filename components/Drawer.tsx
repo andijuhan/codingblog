@@ -14,7 +14,7 @@ const Drawer = () => {
    const [categoryMenu, setCategoryMenu] = useState([]);
 
    const drawerRef = useDetectClickOutside({
-      onTriggered: () => drawer.toggle(),
+      onTriggered: () => drawer.hide(),
    });
 
    useEffect(() => {
@@ -37,7 +37,7 @@ const Drawer = () => {
                initial={{ x: '-100vw' }}
                animate={{ x: '-2vw' }}
                exit={{ x: '-100vw' }}
-               transition={{ type: 'spring', duration: 0.7, bounce: 0.2 }}
+               transition={{ type: 'spring', duration: 1, bounce: 0.2 }}
                className='w-[310px] bg-slate-800 h-screen fixed inset-0 z-40 shadow-xl text-gray-200 pl-10'
                ref={drawerRef}
             >
